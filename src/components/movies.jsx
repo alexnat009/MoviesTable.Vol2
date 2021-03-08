@@ -14,7 +14,7 @@ class Movies extends Component {
     genres: [],
     currentPage: 1,
     selectedGenre: "",
-    pageSize: 4,
+    pageSize: 2,
     sortColumn: { path: "title", order: "asc" },
   };
   componentDidMount() {
@@ -29,10 +29,10 @@ class Movies extends Component {
     this.setState({ movies });
   };
   handleDelete = (movie) => {
-    console.log(movie);
+    let currentPage = this.state.currentPage;
     const movies = this.state.movies.filter((item) => item._id !== movie._id);
-    console.log(movies);
-    this.setState({ movies });
+    if (this.getPageData().data.length === 1) currentPage--;
+    this.setState({ movies, currentPage });
   };
   handlePageChange = (page) => {
     this.setState({ currentPage: page });
@@ -86,6 +86,8 @@ class Movies extends Component {
             onLike={this.handleLiked}
             onDelete={this.handleDelete}
             onSort={this.handleSort}
+            currentPage={currentPage}
+            onPageChange={this.handlePageChange}
           />
           <Pagination
             itemsCount={totalCount}
