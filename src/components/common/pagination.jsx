@@ -4,7 +4,6 @@ import _ from "lodash";
 import PropTypes from "prop-types";
 const Pagination = ({ itemsCount, pageSize, currentPage, onPageChange }) => {
   const pagesCount = Math.ceil(itemsCount / pageSize);
-  if (pagesCount === 1 && currentPage === 1) return null;
   const pages = _.range(1, pagesCount + 1);
   function listElement(text, pageChange, className, key) {
     return (
@@ -15,6 +14,7 @@ const Pagination = ({ itemsCount, pageSize, currentPage, onPageChange }) => {
       </li>
     );
   }
+  if (pagesCount <= 1 || (pagesCount <= 1 && currentPage === 1)) return null;
   return (
     <nav className="paginationNav">
       <ul className="pagination">
