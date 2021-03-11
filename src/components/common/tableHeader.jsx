@@ -19,16 +19,22 @@ class TableHeader extends Component {
   render() {
     return (
       <thead>
-        <tr>
-          {this.props.columns.map((column) => (
-            <th
-              className="clickable"
-              key={column.path || column.key}
-              onClick={() => this.raiseSort(column.path)}
-            >
-              {column.label} {this.renderSortIcon(column)}
-            </th>
-          ))}
+         <tr>
+          {this.props.columns.map((column) => {
+            if (column.label !== undefined) {
+              return (
+                <th
+                  className="clickable"
+                  key={column.path || column.key}
+                  onClick={() => this.raiseSort(column.path)}
+                >
+                  {column.label} {this.renderSortIcon(column)}
+                </th>
+              );
+            } else {
+              return <th key={column.path || column.key} />;
+            }
+          })}
         </tr>
       </thead>
     );
